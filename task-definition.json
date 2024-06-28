@@ -2,7 +2,7 @@
     "taskDefinitionArn": "arn:aws:ecs:us-east-1:730335442778:task-definition/carrinho-fargate-task:2",
     "containerDefinitions": [
         {
-            "name": "my-container",
+            "name": "ecommerce-carrinho",
             "image": "730335442778.dkr.ecr.us-east-1.amazonaws.com/ecommerce-carrinho:latest",
             "cpu": 0,
             "links": [],

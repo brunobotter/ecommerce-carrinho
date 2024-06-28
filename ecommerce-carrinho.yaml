@@ -124,7 +124,7 @@ Resources:
       Memory: '512'
       ExecutionRoleArn: !GetAtt ECSTaskExecutionRole.Arn
       ContainerDefinitions:
-        - Name: my-container
+        - Name: ecommerce-carrinho
           Image: !Sub "${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/ecommerce-carrinho:latest"
           Essential: true
           PortMappings:
@@ -142,6 +142,7 @@ Resources:
     DependsOn: Listener
     Properties:
       Cluster: !Ref ECSCluster
+      ServiceName: !Sub "${AWS::StackName}"
       TaskDefinition: !Ref ECSFargateTaskDefinition
       LaunchType: FARGATE
       NetworkConfiguration:
@@ -154,7 +155,7 @@ Resources:
             - !Ref ECSSecurityGroup
       DesiredCount: 1
       LoadBalancers:
-        - ContainerName: my-container
+        - ContainerName: ecommerce-carrinho
           ContainerPort: 8082
           TargetGroupArn: !Ref ECSTargetGroup
 

@@ -60,7 +60,7 @@ jobs:
       with:
         task-definition: ${{ steps.task-def.outputs.task-definition }}
         service: ecommerce-carrinho
-        cluster: comercio-virtual
+        cluster: ecommerce-carrinho-ecs-cluster
         wait-for-service-stability: true
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
