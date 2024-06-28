@@ -28,7 +28,7 @@
         }
     ],
     "family": "carrinho-fargate-task",
-    "executionRoleArn": "arn:aws:iam::730335442778:role/ecommerce-carrinho-ECSTaskExecutionRole-eZFP3XmlIgwO",
+    "executionRoleArn": "arn:aws:iam::730335442778:role/ecommerce-carrinho-ECSTaskExecutionRole",
     "networkMode": "awsvpc",
     "revision": 9,
     "volumes": [],

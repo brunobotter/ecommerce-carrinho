@@ -11,14 +11,17 @@ import (
 
 func SendMessageToSQS(queueURL string, messageBody string) error {
 	logger := config.GetLogger("SQS")
-	// Cria uma sessão AWS
 
-	sess, err := session.NewSession(&aws.Config{
-		Region:                        aws.String("us-east-1"),
-		CredentialsChainVerboseErrors: aws.Bool(true),
+	// Cria uma sessão AWS
+	sess, err := session.NewSessionWithOptions(session.Options{
+		Config: aws.Config{
+			Region:                        aws.String("us-east-1"), // Defina sua região aqui
+			CredentialsChainVerboseErrors: aws.Bool(true),
+		},
+		SharedConfigState: session.SharedConfigEnable,
 	})
 	if err != nil {
-		logger.Errorf("failed to create session: %w", err)
+		logger.Errorf("failed to create session: %v", err)
 		return err
 	}
 
@@ -35,7 +38,7 @@ func SendMessageToSQS(queueURL string, messageBody string) error {
 	// Envia a mensagem
 	result, err := svc.SendMessage(sendMessageInput)
 	if err != nil {
-		logger.Errorf("failed to send message to SQS: %w", err)
+		logger.Errorf("failed to send message to SQS: %v", err)
 		return err
 	}
 
