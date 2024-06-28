@@ -14,21 +14,13 @@ func SendMessageToSQS(queueURL string, messageBody string) error {
 	// Cria uma sessão AWS
 
 	sess, err := session.NewSession(&aws.Config{
-		Region: aws.String("us-east-1"),
+		Region:                        aws.String("us-east-1"),
+		CredentialsChainVerboseErrors: aws.Bool(true),
 	})
 	if err != nil {
-		return fmt.Errorf("failed to create session: %w", err)
+		logger.Errorf("failed to create session: %w", err)
+		return err
 	}
-
-	// Verifica se as credenciais estão configuradas corretamente
-	credValue, err := sess.Config.Credentials.Get()
-	if err != nil {
-		return fmt.Errorf("failed to get credentials: %w", err)
-	}
-
-	// Log the retrieved credentials for debugging purposes
-	logger.Debugf("AccessKeyID: %s", credValue.AccessKeyID)
-	logger.Debugf("SecretAccessKey: %s", credValue.SecretAccessKey)
 
 	// Cria um serviço SQS
 	svc := sqs.New(sess)
@@ -43,7 +35,8 @@ func SendMessageToSQS(queueURL string, messageBody string) error {
 	// Envia a mensagem
 	result, err := svc.SendMessage(sendMessageInput)
 	if err != nil {
-		return fmt.Errorf("failed to send message to SQS: %w", err)
+		logger.Errorf("failed to send message to SQS: %w", err)
+		return err
 	}
 
 	fmt.Println("Message ID", *result.MessageId)
