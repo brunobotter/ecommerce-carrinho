@@ -1,11 +1,10 @@
 {
-    "taskDefinitionArn": "arn:aws:ecs:us-east-1:730335442778:task-definition/carrinho-fargate-task:2",
+    "taskDefinitionArn": "arn:aws:ecs:us-east-1:730335442778:task-definition/carrinho-fargate-task:5",
     "containerDefinitions": [
         {
             "name": "ecommerce-carrinho",
-            "image": "730335442778.dkr.ecr.us-east-1.amazonaws.com/ecommerce-carrinho:latest",
+            "image": "730335442778.dkr.ecr.us-east-1.amazonaws.com/ecommerce-carrinho:5",
             "cpu": 0,
-            "links": [],
             "portMappings": [
                 {
                     "containerPort": 8082,
@@ -14,36 +13,24 @@
                 }
             ],
             "essential": true,
-            "entryPoint": [],
-            "command": [],
             "environment": [],
-            "environmentFiles": [],
             "mountPoints": [],
             "volumesFrom": [],
-            "secrets": [],
-            "dnsServers": [],
-            "dnsSearchDomains": [],
-            "extraHosts": [],
-            "dockerSecurityOptions": [],
-            "dockerLabels": {},
-            "ulimits": [],
             "logConfiguration": {
                 "logDriver": "awslogs",
                 "options": {
                     "awslogs-group": "/ecs/ecommerce-carrinho",
                     "awslogs-region": "us-east-1",
                     "awslogs-stream-prefix": "ecs"
-                },
-                "secretOptions": []
+                }
             },
-            "systemControls": [],
-            "credentialSpecs": []
+            "systemControls": []
         }
     ],
     "family": "carrinho-fargate-task",
     "executionRoleArn": "arn:aws:iam::730335442778:role/ecommerce-carrinho-ECSTaskExecutionRole-Vofftzh6VceS",
     "networkMode": "awsvpc",
-    "revision": 2,
+    "revision": 5,
     "volumes": [],
     "status": "ACTIVE",
     "requiresAttributes": [
@@ -58,9 +45,6 @@
         },
         {
             "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
-        },
-        {
-            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.17"
         },
         {
             "name": "ecs.capability.execution-role-ecr-pull"
@@ -82,7 +66,7 @@
     ],
     "cpu": "256",
     "memory": "512",
-    "registeredAt": "2024-06-28T18:32:23.507Z",
+    "registeredAt": "2024-06-28T20:18:51.369Z",
     "registeredBy": "arn:aws:iam::730335442778:user/teste",
     "tags": []
 }

@@ -13,9 +13,9 @@ import (
 )
 
 const (
-	clienteAPIURL  = "http://ecommerce-usuario-alb-804137571.us-east-1.elb.amazonaws.com:8080/api/v1/usuario"        // URL da API de cliente
-	vendaAPIURL    = "http://ecommerce-produto-alb-1968032622.us-east-1.elb.amazonaws.com:8081/api/v1/produto/venda" // URL da API de venda
-	requestTimeout = 5 * time.Second
+	clienteAPIURL  = "http://ecommerce-usuario-alb-289302933.us-east-1.elb.amazonaws.com:8080/api/v1/usuario"  // URL da API de cliente
+	vendaAPIURL    = "http://ecommerce-produto-alb-1627165674.us-east-1.elb.amazonaws.com:8081/api/v1/produto" // URL da API de venda
+	requestTimeout = 15 * time.Second
 )
 
 type ClienteResponseData struct {
