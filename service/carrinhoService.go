@@ -3,7 +3,7 @@ package service
 import (
 	"encoding/json"
 
-	"github.com/brunobotter/ecommerce-carrinho/config"
+	"github.com/brunobotter/ecommerce-carrinho/configs"
 	"github.com/brunobotter/ecommerce-carrinho/integration"
 	"github.com/brunobotter/ecommerce-carrinho/scheamas"
 	"github.com/brunobotter/ecommerce-carrinho/vo"
@@ -17,7 +17,7 @@ func InitializeService(database *gorm.DB) {
 	db = database
 }
 func AdicionarAoCarrinho(request vo.CreateCarrinhoRequest) (scheamas.CarrinhoResponse, error) {
-	logger := config.GetLogger("AdicionarAoCarrinho")
+	logger := configs.GetLogger("AdicionarAoCarrinho")
 
 	cliente, err := integration.GetCliente(request.ClienteID)
 	if err != nil {

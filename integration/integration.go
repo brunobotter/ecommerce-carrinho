@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/brunobotter/ecommerce-carrinho/config"
+	"github.com/brunobotter/ecommerce-carrinho/configs"
 	"github.com/brunobotter/ecommerce-carrinho/vo"
 )
 
@@ -72,7 +72,7 @@ func GetCliente(clienteID string) (ClienteResponseData, error) {
 }
 
 func PostVenda(request vo.CreateCarrinhoRequest) (VendaResponseData, error) {
-	logger := config.GetLogger("produto")
+	logger := configs.GetLogger("produto")
 	url := vendaAPIURL
 	// Converter request para JSON
 	vendaRequest := VendaRequest{

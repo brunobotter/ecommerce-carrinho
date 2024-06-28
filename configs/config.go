@@ -1,4 +1,4 @@
-package config
+package configs
 
 import (
 	"fmt"
@@ -17,6 +17,11 @@ func Init() error {
 	db, err = InitializeSql()
 	if err != nil {
 		return fmt.Errorf("Error initialize mysql: %v", err)
+	}
+	// Initialize AWS Secrets Manager
+	err = InitSSM("us-east-1") // Substitua pela sua região desejada
+	if err != nil {
+		return fmt.Errorf("Error initialize AWS Secrets Manager: %v", err)
 	}
 	return nil
 }

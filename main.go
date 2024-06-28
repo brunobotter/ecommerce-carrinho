@@ -1,22 +1,23 @@
 package main
 
 import (
-	"github.com/brunobotter/ecommerce-carrinho/config"
+	"github.com/brunobotter/ecommerce-carrinho/configs"
 	"github.com/brunobotter/ecommerce-carrinho/router"
 )
 
 var (
-	logger *config.Logger
+	logger *configs.Logger
 )
 
 func main() {
-	logger = config.GetLogger("main")
+	logger = configs.GetLogger("main")
 	//initialize configs
-	err := config.Init()
+	err := configs.Init()
 	if err != nil {
 		logger.Errorf("config initializate error: %v", err)
 		return
 	}
 	//initialize router
 	router.Initialize()
+
 }

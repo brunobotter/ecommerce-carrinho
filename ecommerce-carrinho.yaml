@@ -112,7 +112,7 @@ Resources:
                   - logs:GetLogEvents
                   - logs:FilterLogEvents
                   - s3:GetObject
-                Resource: "*"
+                Resource: "*"     
 
   ECSFargateTaskDefinition:
     Type: AWS::ECS::TaskDefinition

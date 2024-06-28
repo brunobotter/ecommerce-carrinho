@@ -1,18 +1,18 @@
 package handler
 
 import (
-	"github.com/brunobotter/ecommerce-carrinho/config"
+	"github.com/brunobotter/ecommerce-carrinho/configs"
 	"github.com/brunobotter/ecommerce-carrinho/service"
 	"gorm.io/gorm"
 )
 
 var (
-	logger *config.Logger
+	logger *configs.Logger
 	db     *gorm.DB
 )
 
 func InitializeHandler() {
-	logger = config.GetLogger("handler")
-	db = config.GetMySql()
+	logger = configs.GetLogger("handler")
+	db = configs.GetMySql()
 	service.InitializeService(db)
 }
