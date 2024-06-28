@@ -1,9 +1,9 @@
 {
-    "taskDefinitionArn": "arn:aws:ecs:us-east-1:730335442778:task-definition/carrinho-fargate-task:5",
+    "taskDefinitionArn": "arn:aws:ecs:us-east-1:730335442778:task-definition/carrinho-fargate-task:9",
     "containerDefinitions": [
         {
             "name": "ecommerce-carrinho",
-            "image": "730335442778.dkr.ecr.us-east-1.amazonaws.com/ecommerce-carrinho:5",
+            "image": "730335442778.dkr.ecr.us-east-1.amazonaws.com/ecommerce-carrinho:8",
             "cpu": 0,
             "portMappings": [
                 {
@@ -30,7 +30,7 @@
     "family": "carrinho-fargate-task",
     "executionRoleArn": "arn:aws:iam::730335442778:role/ecommerce-carrinho-ECSTaskExecutionRole-eZFP3XmlIgwO",
     "networkMode": "awsvpc",
-    "revision": 5,
+    "revision": 9,
     "volumes": [],
     "status": "ACTIVE",
     "requiresAttributes": [
@@ -66,7 +66,7 @@
     ],
     "cpu": "256",
     "memory": "512",
-    "registeredAt": "2024-06-28T20:18:51.369Z",
+    "registeredAt": "2024-06-28T21:04:54.812Z",
     "registeredBy": "arn:aws:iam::730335442778:user/teste",
     "tags": []
 }
