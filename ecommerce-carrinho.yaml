@@ -78,7 +78,7 @@ Resources:
   ECSCluster:
     Type: AWS::ECS::Cluster
     Properties:
-      ClusterName: carrinho-virtual
+      ClusterName: !Sub "${AWS::StackName}-ecs-cluster"
 
   ECSTaskExecutionRole:
     Type: AWS::IAM::Role
@@ -116,7 +116,7 @@ Resources:
   ECSFargateTaskDefinition:
     Type: AWS::ECS::TaskDefinition
     Properties:
-      Family: my-fargate-task
+      Family: carrinho-fargate-task
       NetworkMode: awsvpc
       RequiresCompatibilities:
         - FARGATE

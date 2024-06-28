@@ -13,8 +13,8 @@ import (
 )
 
 const (
-	clienteAPIURL  = "http://localhost:8080/api/v1/usuario"       // URL da API de cliente
-	vendaAPIURL    = "http://localhost:8081/api/v1/produto/venda" // URL da API de venda
+	clienteAPIURL  = "http://ecommerce-usuario-alb-2102179549.us-east-1.elb.amazonaws.com:8080/api/v1/usuario"       // URL da API de cliente
+	vendaAPIURL    = "http://ecommerce-produto-alb-1132038597.us-east-1.elb.amazonaws.com:8081/api/v1/produto/venda" // URL da API de venda
 	requestTimeout = 5 * time.Second
 )
 
