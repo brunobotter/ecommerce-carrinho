@@ -2,6 +2,7 @@ package integration
 
 import (
 	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/sqs"
 	"github.com/brunobotter/ecommerce-carrinho/configs"
@@ -12,7 +13,8 @@ func SendMessageToSQS(queueURL string, messageBody string) error {
 
 	// Cria uma sessão AWS
 	sess := session.Must(session.NewSession(&aws.Config{
-		Region: aws.String("us-east-1"),
+		Region:      aws.String("us-east-1"),
+		Credentials: credentials.NewEnvCredentials(),
 	}))
 	logger.Debugf("criou sessao")
 
