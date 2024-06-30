@@ -3,12 +3,14 @@ package handler
 import (
 	"net/http"
 
+	"github.com/brunobotter/ecommerce-carrinho/configs"
 	"github.com/brunobotter/ecommerce-carrinho/service"
 	"github.com/brunobotter/ecommerce-carrinho/vo"
 	"github.com/gin-gonic/gin"
 )
 
 func CreateCarrinhoHandler(ctx *gin.Context) {
+	logger := configs.GetLogger("handler")
 	var request vo.CreateCarrinhoRequest
 	if err := ctx.Bind(&request); err != nil {
 		vo.SendError(ctx, http.StatusBadRequest, err.Error())
@@ -16,7 +18,7 @@ func CreateCarrinhoHandler(ctx *gin.Context) {
 	}
 	accessKeyID := ctx.GetHeader("X-AWS-Access-Key-ID")
 	secretAccessKey := ctx.GetHeader("X-AWS-Secret-Access-Key")
-
+	logger.Debugf("ace %s", accessKeyID)
 	region := ctx.GetHeader("X-AWS-Region")
 
 	carrinho, err := service.AdicionarAoCarrinho(request, accessKeyID, secretAccessKey, region)

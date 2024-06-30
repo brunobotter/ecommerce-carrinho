@@ -1,6 +1,10 @@
 package integration
 
 import (
+	"crypto/tls"
+	"net/http"
+	"time"
+
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/session"
@@ -27,7 +31,14 @@ func SendMessageToSQS(queueURL string, messageBody string, accessKey string, sec
 	if err != nil {
 		return err
 	}
+	awsHTTPClient := &http.Client{
+		Transport: &http.Transport{
+			TLSClientConfig: &tls.Config{InsecureSkipVerify: true}, // Ignorar a verificação de certificado
+		},
+		Timeout: 10 * time.Second, // Ajuste o timeout conforme necessário
+	}
 
+	sess.Config.HTTPClient = awsHTTPClient
 	sqsClient := sqs.New(sess)
 
 	logger.Debugf("iniciou service sqs")
