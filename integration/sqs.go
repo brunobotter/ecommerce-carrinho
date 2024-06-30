@@ -21,23 +21,24 @@ func SendMessageToSQS(queueURL string, messageBody string) error {
 		return err
 	}
 
-	// Carregar configurações padrão do AWS SDK v2
-	cfg, err := config.LoadDefaultConfig(context.TODO(), config.WithRegion("us-east-1"))
+	// Carregar configurações padrão do AWS SDK v2 com credenciais
+	cfg, err := config.LoadDefaultConfig(context.TODO(),
+		config.WithRegion("us-east-1"),
+		config.WithCredentialsProvider(creds),
+	)
 	if err != nil {
 		logger.Errorf("failed to load AWS SDK configuration: %v", err)
 		return err
 	}
 
-	// Criar um cliente SQS com as credenciais obtidas do Secrets Manager
-	svc := sqs.NewFromConfig(cfg, func(o *sqs.Options) {
-		o.Credentials = creds
-	})
+	// Criar um cliente SQS
+	svc := sqs.NewFromConfig(cfg)
 
 	// Parâmetros da mensagem
 	sendMessageInput := &sqs.SendMessageInput{
 		MessageBody:    aws.String(messageBody),
 		QueueUrl:       aws.String(queueURL),
-		MessageGroupId: aws.String("paymentGroup"), // Fila FIFO requer um ID de grupo
+		MessageGroupId: aws.String("paymentGroup"),
 	}
 
 	// Enviar mensagem
@@ -76,18 +77,24 @@ func GetAWSSecrets() (aws.CredentialsProvider, error) {
 		return nil, err
 	}
 
-	// Decodificar o valor do segredo
-	var creds aws.Credentials
-	if err := json.Unmarshal([]byte(*result.SecretString), &creds); err != nil {
+	// Estrutura para armazenar as credenciais
+	type Secret struct {
+		AccessKeyID     string `json:"accessKeyId"`
+		SecretAccessKey string `json:"secretAccessKey"`
+		SessionToken    string `json:"sessionToken"`
+	}
+
+	var secret Secret
+	if err := json.Unmarshal([]byte(*result.SecretString), &secret); err != nil {
 		return nil, err
 	}
 
-	// Criar um provedor de credenciais personalizado usando as credenciais obtidas
+	// Criar um provedor de credenciais usando as credenciais obtidas
 	credsProvider := aws.CredentialsProviderFunc(func(ctx context.Context) (aws.Credentials, error) {
 		return aws.Credentials{
-			AccessKeyID:     creds.AccessKeyID,
-			SecretAccessKey: creds.SecretAccessKey,
-			SessionToken:    creds.SessionToken,
+			AccessKeyID:     secret.AccessKeyID,
+			SecretAccessKey: secret.SecretAccessKey,
+			SessionToken:    secret.SessionToken,
 		}, nil
 	})
 
