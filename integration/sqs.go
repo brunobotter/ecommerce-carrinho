@@ -1,8 +1,6 @@
 package integration
 
 import (
-	"fmt"
-
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/sqs"
@@ -18,9 +16,10 @@ func SendMessageToSQS(queueURL string, messageBody string) error {
 	}))
 	credValue, err := sess.Config.Credentials.Get()
 	if err != nil {
-		return fmt.Errorf("failed to get credentials: %w", err)
+		logger.Errorf("failed to get credentials: %w", err)
+		return err
 	}
-	logger.Debugf("%v", credValue)
+	logger.Debugf("cred value %v", credValue)
 	// Criar um cliente SQS
 	svc := sqs.New(sess)
 
