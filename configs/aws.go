@@ -19,7 +19,8 @@ func NewConnection() *Connection {
 
 func GetConfig() *aws.Config {
 	if awsConfig == nil {
-		awsConfig, err := config.LoadDefaultConfig(context.TODO())
+		awsConfig, err := config.LoadDefaultConfig(context.TODO(),
+			config.WithEC2IMDSRegion())
 		if err != nil {
 			panic("unable to connect to AWS")
 		}
