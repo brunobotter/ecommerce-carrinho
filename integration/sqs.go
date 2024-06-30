@@ -1,18 +1,15 @@
 package integration
 
 import (
-	"context"
-
-	"github.com/aws/aws-sdk-go-v2/aws"
-	"github.com/aws/aws-sdk-go-v2/service/sqs"
+	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/session"
+	"github.com/aws/aws-sdk-go/service/sqs"
 	"github.com/brunobotter/ecommerce-carrinho/configs"
 )
 
 func SendMessageToSQS(queueURL string, messageBody string, accessKey string, secretAccess string, region string) error {
 	logger := configs.GetLogger("SQS")
-	ctx := context.Background()
 
 	// Obter as credenciais do GitHub Secrets
 	accessKeyID := accessKey
@@ -20,7 +17,7 @@ func SendMessageToSQS(queueURL string, messageBody string, accessKey string, sec
 
 	// Criar uma sessão AWS usando as credenciais obtidas
 	sess, err := session.NewSession(&aws.Config{
-		Region: region,
+		Region: aws.String(region),
 		Credentials: credentials.NewStaticCredentials(
 			accessKeyID,
 			secretAccessKey,
@@ -31,7 +28,7 @@ func SendMessageToSQS(queueURL string, messageBody string, accessKey string, sec
 		return err
 	}
 
-	sqsClient := sqs.NewFromConfig(sess)
+	sqsClient := sqs.New(sess)
 
 	logger.Debugf("iniciou service sqs")
 	// Parâmetros da mensagem
@@ -42,7 +39,7 @@ func SendMessageToSQS(queueURL string, messageBody string, accessKey string, sec
 	}
 	logger.Debugf("enviando msg")
 	// Enviar mensagem
-	result, err := sqsClient.SendMessage(ctx, sendMessageInput)
+	result, err := sqsClient.SendMessage(sendMessageInput)
 	if err != nil {
 		logger.Errorf("failed to send message to SQS: %v", err)
 		return err

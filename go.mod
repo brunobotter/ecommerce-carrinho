@@ -3,6 +3,7 @@ module github.com/brunobotter/ecommerce-carrinho
 go 1.22.3
 
 require (
+	github.com/aws/aws-sdk-go v1.54.11
 	github.com/aws/aws-sdk-go-v2 v1.30.1
 	github.com/gin-gonic/gin v1.10.0
 	gorm.io/driver/mysql v1.5.6
@@ -21,6 +22,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/ssooidc v1.26.1 // indirect
 	github.com/aws/aws-sdk-go-v2/service/sts v1.30.1 // indirect
 	github.com/aws/smithy-go v1.20.3 // indirect
+	github.com/jmespath/go-jmespath v0.4.0 // indirect
 )
 
 require (
