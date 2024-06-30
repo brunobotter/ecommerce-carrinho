@@ -4,23 +4,34 @@ import (
 	"context"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
-	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/service/sqs"
+	"github.com/aws/aws-sdk-go/aws/credentials"
+	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/brunobotter/ecommerce-carrinho/configs"
 )
 
-func SendMessageToSQS(queueURL string, messageBody string) error {
+func SendMessageToSQS(queueURL string, messageBody string, accessKey string, secretAccess string, region string) error {
 	logger := configs.GetLogger("SQS")
 	ctx := context.Background()
 
-	// Carregar configuração padrão do SDK AWS com base em variáveis de ambiente
-	cfg, err := config.LoadDefaultConfig(ctx, config.WithRegion("us-east-1"), config.WithCredentialsProvider(aws.NewConfig().Credentials))
+	// Obter as credenciais do GitHub Secrets
+	accessKeyID := accessKey
+	secretAccessKey := secretAccess
+
+	// Criar uma sessão AWS usando as credenciais obtidas
+	sess, err := session.NewSession(&aws.Config{
+		Region: region,
+		Credentials: credentials.NewStaticCredentials(
+			accessKeyID,
+			secretAccessKey,
+			"", // token (optional)
+		),
+	})
 	if err != nil {
-		logger.Errorf("failed to load SDK configuration: %v", err)
 		return err
 	}
 
-	sqsClient := sqs.NewFromConfig(cfg)
+	sqsClient := sqs.NewFromConfig(sess)
 
 	logger.Debugf("iniciou service sqs")
 	// Parâmetros da mensagem

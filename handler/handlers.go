@@ -14,8 +14,12 @@ func CreateCarrinhoHandler(ctx *gin.Context) {
 		vo.SendError(ctx, http.StatusBadRequest, err.Error())
 		return
 	}
+	accessKeyID := ctx.GetHeader("X-AWS-Access-Key-ID")
+	secretAccessKey := ctx.GetHeader("X-AWS-Secret-Access-Key")
 
-	carrinho, err := service.AdicionarAoCarrinho(request)
+	region := ctx.GetHeader("X-AWS-Region")
+
+	carrinho, err := service.AdicionarAoCarrinho(request, accessKeyID, secretAccessKey, region)
 	if err != nil {
 		vo.SendError(ctx, http.StatusInternalServerError, err.Error())
 		return

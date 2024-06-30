@@ -16,7 +16,7 @@ var db *gorm.DB
 func InitializeService(database *gorm.DB) {
 	db = database
 }
-func AdicionarAoCarrinho(request vo.CreateCarrinhoRequest) (scheamas.CarrinhoResponse, error) {
+func AdicionarAoCarrinho(request vo.CreateCarrinhoRequest, accessKeyID string, secretAccessKey string, region string) (scheamas.CarrinhoResponse, error) {
 	logger := configs.GetLogger("AdicionarAoCarrinho")
 
 	cliente, err := integration.GetCliente(request.ClienteID)
@@ -73,9 +73,12 @@ func AdicionarAoCarrinho(request vo.CreateCarrinhoRequest) (scheamas.CarrinhoRes
 		return scheamas.CarrinhoResponse{}, err
 	}
 	logger.Debugf("enviar para a fila sqs ")
-	// Enviar para fila de pagamento
+
+	// URL da fila SQS
 	queueURL := "https://sqs.us-east-1.amazonaws.com/730335442778/Pagamento.fifo" // Substitua pela URL da sua fila SQS
-	err = integration.SendMessageToSQS(queueURL, string(pagamentoJSON))
+
+	// Enviar para fila de pagamento com credenciais
+	err = integration.SendMessageToSQS(queueURL, string(pagamentoJSON), accessKeyID, secretAccessKey, region)
 	if err != nil {
 		logger.Errorf("erro envio para fila %v", err)
 		return scheamas.CarrinhoResponse{}, err
