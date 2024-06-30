@@ -29,7 +29,7 @@ func AdicionarAoCarrinho(request vo.CreateCarrinhoRequest, accessKeyID string, s
 	if err != nil {
 		return scheamas.CarrinhoResponse{}, err
 	}
-	logger.Debugf("api venda ok ")
+	logger.Debugf("api venda ok %v", venda)
 
 	carrinho := scheamas.Carrinho{
 		Quantidade:       request.Quantidade,
@@ -45,7 +45,6 @@ func AdicionarAoCarrinho(request vo.CreateCarrinhoRequest, accessKeyID string, s
 		return scheamas.CarrinhoResponse{}, err
 	}
 	carrinhoResponse := scheamas.ToCarrinhoResponse(carrinho)
-	logger.Debugf("salvou no banco ")
 	// Preparar dados de pagamento para envio à fila SQS
 	pagamentoData := struct {
 		CarrinhoID       uint    `json:"carrinho_id"`
@@ -66,13 +65,11 @@ func AdicionarAoCarrinho(request vo.CreateCarrinhoRequest, accessKeyID string, s
 		DescricaoProduto: venda.Descricao,
 		TipoPagamento:    request.TipoPagamento,
 	}
-	logger.Debugf("deserealização ")
 	pagamentoJSON, err := json.Marshal(pagamentoData)
 	if err != nil {
 		logger.Errorf("erro na deserealização %v", err)
 		return scheamas.CarrinhoResponse{}, err
 	}
-	logger.Debugf("enviar para a fila sqs ")
 
 	// URL da fila SQS
 	queueURL := "https://sqs.us-east-1.amazonaws.com/730335442778/Pagamento.fifo" // Substitua pela URL da sua fila SQS

@@ -41,14 +41,13 @@ func SendMessageToSQS(queueURL string, messageBody string, accessKey string, sec
 	sess.Config.HTTPClient = awsHTTPClient
 	sqsClient := sqs.New(sess)
 
-	logger.Debugf("iniciou service sqs")
 	// Parâmetros da mensagem
 	sendMessageInput := &sqs.SendMessageInput{
 		MessageBody:    aws.String(messageBody),
 		QueueUrl:       aws.String(queueURL),
 		MessageGroupId: aws.String("paymentGroup"),
 	}
-	logger.Debugf("enviando msg")
+
 	// Enviar mensagem
 	result, err := sqsClient.SendMessage(sendMessageInput)
 	if err != nil {
