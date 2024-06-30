@@ -66,13 +66,13 @@ func AdicionarAoCarrinho(request vo.CreateCarrinhoRequest) (scheamas.CarrinhoRes
 		DescricaoProduto: venda.Descricao,
 		TipoPagamento:    request.TipoPagamento,
 	}
-
+	logger.Debugf("deserealização ")
 	pagamentoJSON, err := json.Marshal(pagamentoData)
 	if err != nil {
 		logger.Errorf("erro na deserealização %v", err)
 		return scheamas.CarrinhoResponse{}, err
 	}
-
+	logger.Debugf("enviar para a fila sqs ")
 	// Enviar para fila de pagamento
 	queueURL := "https://sqs.us-east-1.amazonaws.com/730335442778/Pagamento.fifo" // Substitua pela URL da sua fila SQS
 	err = integration.SendMessageToSQS(queueURL, string(pagamentoJSON))
