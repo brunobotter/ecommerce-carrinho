@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
+	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/service/sqs"
 	"github.com/brunobotter/ecommerce-carrinho/configs"
 )
@@ -11,9 +12,15 @@ import (
 func SendMessageToSQS(queueURL string, messageBody string) error {
 	logger := configs.GetLogger("SQS")
 	ctx := context.Background()
-	cfg := configs.GetConfig()
 
-	sqsClient := sqs.NewFromConfig(*cfg)
+	// Carregar configuração padrão do SDK AWS com base em variáveis de ambiente
+	cfg, err := config.LoadDefaultConfig(ctx, config.WithRegion("us-east-1"))
+	if err != nil {
+		logger.Errorf("failed to load SDK configuration: %v", err)
+		return err
+	}
+
+	sqsClient := sqs.NewFromConfig(cfg)
 
 	logger.Debugf("iniciou service sqs")
 	// Parâmetros da mensagem
