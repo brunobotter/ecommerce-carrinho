@@ -9,23 +9,14 @@ import (
 
 var awsConfig *aws.Config
 
-type Connection struct {
-	config *aws.Config
-}
-
-func NewConnection() *Connection {
-	return &Connection{config: GetConfig()}
-}
-
 func GetConfig() *aws.Config {
 	if awsConfig == nil {
-		awsConfig, err := config.LoadDefaultConfig(context.TODO(),
-			config.WithEC2IMDSRegion())
+		cfg, err := config.LoadDefaultConfig(context.TODO())
 		if err != nil {
 			panic("unable to connect to AWS")
 		}
 
-		return &awsConfig
+		awsConfig = &cfg
 	}
 	return awsConfig
 }

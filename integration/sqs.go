@@ -3,8 +3,8 @@ package integration
 import (
 	"context"
 
+	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/service/sqs"
-	"github.com/aws/aws-sdk-go/aws"
 	"github.com/brunobotter/ecommerce-carrinho/configs"
 )
 
