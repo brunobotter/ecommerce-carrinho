@@ -1,6 +1,8 @@
 package integration
 
 import (
+	"fmt"
+
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/sqs"
@@ -12,10 +14,13 @@ func SendMessageToSQS(queueURL string, messageBody string) error {
 
 	// Cria uma sessão AWS
 	sess := session.Must(session.NewSession(&aws.Config{
-		Region:   aws.String("us-east-1"),
-		Endpoint: aws.String("queueURL"),
+		Region: aws.String("us-east-1"),
 	}))
-
+	credValue, err := sess.Config.Credentials.Get()
+	if err != nil {
+		return fmt.Errorf("failed to get credentials: %w", err)
+	}
+	logger.Debugf("%v", credValue)
 	// Criar um cliente SQS
 	svc := sqs.New(sess)
 
