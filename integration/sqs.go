@@ -14,7 +14,7 @@ func SendMessageToSQS(queueURL string, messageBody string) error {
 	ctx := context.Background()
 
 	// Carregar configuração padrão do SDK AWS com base em variáveis de ambiente
-	cfg, err := config.LoadDefaultConfig(ctx, config.WithRegion("us-east-1"))
+	cfg, err := config.LoadDefaultConfig(ctx, config.WithRegion("us-east-1"), config.WithCredentialsProvider(aws.NewConfig().Credentials))
 	if err != nil {
 		logger.Errorf("failed to load SDK configuration: %v", err)
 		return err

@@ -23,5 +23,15 @@ COPY --from=builder /app/ecommerce-carrinho /ecommerce-carrinho
 # Define a porta que o aplicativo vai expor
 EXPOSE 8082
 
+# Define variáveis de ambiente como argumentos de build
+ARG AWS_REGION
+ARG AWS_ACCESS_KEY_ID
+ARG AWS_SECRET_ACCESS_KEY
+
+# Define as variáveis de ambiente
+ENV AWS_REGION=${AWS_REGION}
+ENV AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+ENV AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+
 # Define o ponto de entrada do container
 ENTRYPOINT ["/ecommerce-carrinho"]
