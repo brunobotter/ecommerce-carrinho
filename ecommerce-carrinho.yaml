@@ -112,6 +112,10 @@ Resources:
                   - logs:GetLogEvents
                   - logs:FilterLogEvents
                   - s3:GetObject
+                  - sqs:SendMessage
+                  - sqs:ReceiveMessage
+                  - sqs:DeleteMessage
+                  - sqs:GetQueueUrl
                 Resource: "*"     
 
   ECSFargateTaskDefinition:
@@ -124,6 +128,7 @@ Resources:
       Cpu: '256'
       Memory: '512'
       ExecutionRoleArn: !GetAtt ECSTaskExecutionRole.Arn
+      TaskRoleArn: !GetAtt ECSTaskExecutionRole.Arn  # Adicionado
       ContainerDefinitions:
         - Name: ecommerce-carrinho
           Image: !Sub "${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/ecommerce-carrinho:latest"
