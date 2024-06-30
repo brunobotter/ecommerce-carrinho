@@ -13,7 +13,7 @@ func SendMessageToSQS(queueURL string, messageBody string) error {
 	// Cria uma sessão AWS
 	sess := session.Must(session.NewSession(&aws.Config{
 		Region:   aws.String("us-east-1"),
-		Endpoint: aws.String(""),
+		Endpoint: aws.String("queueURL"),
 	}))
 
 	// Criar um cliente SQS
