@@ -11,7 +11,9 @@ import (
 func SendMessageToSQS(queueURL string, messageBody string) error {
 	logger := configs.GetLogger("SQS")
 	ctx := context.Background()
-	sqsClient := sqs.NewFromConfig(*configs.GetConfig())
+	cfg := configs.GetConfig()
+
+	sqsClient := sqs.NewFromConfig(*cfg)
 
 	logger.Debugf("iniciou service sqs")
 	// Parâmetros da mensagem
