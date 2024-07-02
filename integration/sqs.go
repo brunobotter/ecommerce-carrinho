@@ -43,9 +43,9 @@ func SendMessageToSQS(queueURL string, messageBody string, accessKey string, sec
 
 	// Parâmetros da mensagem
 	sendMessageInput := &sqs.SendMessageInput{
-		MessageBody:    aws.String(messageBody),
-		QueueUrl:       aws.String(queueURL),
-		MessageGroupId: aws.String("paymentGroup"),
+		MessageBody: aws.String(messageBody),
+		QueueUrl:    aws.String(queueURL),
+		// Removido o MessageGroupId para filas não FIFO
 	}
 
 	// Enviar mensagem
