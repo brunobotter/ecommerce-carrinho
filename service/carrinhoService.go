@@ -54,7 +54,7 @@ func AdicionarAoCarrinho(request vo.CreateCarrinhoRequest, accessKeyID string, s
 		Valor            float64 `json:"valor"`
 		Quantidade       int64   `json:"quantidade"`
 		DescricaoProduto string  `json:"descricao_produto"`
-		TipoPagamento    string  `json:"tipoPagamento"`
+		TipoPagamento    string  `json:"tipo_pagamento"`
 	}{
 		CarrinhoID:       carrinho.ID,
 		NomeCliente:      cliente.Nome,
@@ -72,7 +72,7 @@ func AdicionarAoCarrinho(request vo.CreateCarrinhoRequest, accessKeyID string, s
 	}
 
 	// URL da fila SQS
-	queueURL := "https://sqs.us-east-1.amazonaws.com/730335442778/Pagamento.fifo" // Substitua pela URL da sua fila SQS
+	queueURL := "https://sqs.us-east-1.amazonaws.com/730335442778/FilaPagamento" // Substitua pela URL da sua fila SQS
 
 	// Enviar para fila de pagamento com credenciais
 	err = integration.SendMessageToSQS(queueURL, string(pagamentoJSON), accessKeyID, secretAccessKey, region)

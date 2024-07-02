@@ -6,7 +6,7 @@ type CreateCarrinhoRequest struct {
 	ClienteID     string `json:"clienteId"`
 	Quantidade    int64  `json:"quantidade"`
 	ProdutoID     string `json:"produtoId"`
-	TipoPagamento string `json:"tipoPagamento"`
+	TipoPagamento string `json:"tipo_pagamento"`
 }
 
 type UpdateCarrinhoRequest struct {
